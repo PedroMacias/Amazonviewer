@@ -1,17 +1,36 @@
 package com.mycode.amazonviewer.model;
 
-public class Show {
+public class Show extends Film{
+		
+	private int id;
+	private int sessionsQuantity;
+	private Chapter[] chapters;
 	
-	int id;
-	String title;
-	String genre;
-	String creator;
-	int duration;
-	short year;
-	boolean viewed;
-	int timeViewed;	
+	public Show(String title, String genre, String creator, int duration, int sessionsQuantity) {
+		super(title, genre, creator, duration);
+		this.sessionsQuantity = sessionsQuantity;
+	}
 	
-	int sessionsQuantity;
-	//chapters[]
+	public int getId() {
+		return id;
+	}
 
+	public int getSessionsQuantity() {
+		return sessionsQuantity;
+	}
+
+	public void setSessionsQuantity(int sessionsQuantity) {
+		this.sessionsQuantity = sessionsQuantity;
+	}
+
+	public Chapter[] getChapters() {
+		return chapters;
+	}
+
+	public void setChapters(Chapter[] chapters) {
+		this.chapters = chapters;
+	}
+
+	
+	
 }
