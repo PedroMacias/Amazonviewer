@@ -31,6 +31,15 @@ public class Show extends Film{
 		this.chapters = chapters;
 	}
 
+	public String toString() {
+		return "\n ..:: SHOW ::.. " +
+				"\n Title: " + getTitle() +
+				"\n Genero: " + getGenre() +
+				"\n Year: " + getYear()+
+				"\n Creator: " + getCreator()+
+				"\n Duration: " + getDuration();
+	}
+	
 	
 	
 }
