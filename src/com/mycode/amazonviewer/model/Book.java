@@ -1,5 +1,6 @@
 package com.mycode.amazonviewer.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Book extends Publication implements IVisualizable{
@@ -55,9 +56,9 @@ public class Book extends Publication implements IVisualizable{
 				"\n Editorual: " + getEditorial() +
 				"\n Edition Date: " + getEdititionDate()+
 				"\n Authors: ";
-		for(int i = 0; i < getAuthors().length; i++){
-			detailBook += "\t" + getAuthors()[i];
-		}
+//		for(int i = 0; i < getAuthors().length; i++){
+//			detailBook += "\t" + getAuthors()[i];
+//		}
 		return detailBook;
 		
 	}
@@ -74,6 +75,16 @@ public class Book extends Publication implements IVisualizable{
 		}else{
 			setTimeReaded(0);
 		}		
+	}
+	
+	public static ArrayList<Book> makeBooksList(){
+		ArrayList<Book> books = new ArrayList();
+				
+		for (int i = 1; i <= 5 ; i++) {					
+			books.add(new Book("Book " + i, new Date() , "Editorial "+i));	
+		}
+		
+		return books;
 	}
 	
 	

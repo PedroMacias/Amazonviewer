@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+import com.mycode.amazonviewer.model.Book;
+import com.mycode.amazonviewer.model.Chapter;
 import com.mycode.amazonviewer.model.Movie;
+import com.mycode.amazonviewer.model.Show;
 
 public class Main {
 
@@ -37,6 +40,7 @@ int exit = 0;
 			switch (response) {
 			case 0:
 				//Exit
+				exit = 0;
 				break;
 			
 			case 1:
@@ -96,7 +100,7 @@ int exit = 0;
 				System.out.println(i+1 + ". " + movies.get(i).getTitle() + ". Viewed: " + movies.get(i).isViewed());
 			}
 			
-			System.out.println("0. Regresar al Menu");
+			System.out.println("0. Back to main Menu");
 			System.out.println();
 			
 			//Read user response
@@ -130,21 +134,72 @@ int exit = 0;
 	public static void showShow(){
 		
 		int exit = 1;
+		ArrayList<Show> shows = Show.makeShowList();
 		do{
 			System.out.println();
 			System.out.println("...::SHOW::...");
 			System.out.println();
+			
+			for (int i = 0; i < shows.size(); i++) {
+				System.out.println(i+1 + ". " + shows.get(i).getTitle() + ". Viewed: " + shows.get(i).isViewed());
+			}
+			
+			System.out.println("0. Back to main Menu");
+			System.out.println();
+			
+			//Read user response
+			
+			Scanner sc = new Scanner(System.in);			
+			int response = Integer.valueOf(sc.nextLine());
+			
+			if (response == 0) {
+				showMenu();
+			}
+			showChapters(shows.get(response -1).getChapters());
+			
 		}while(exit!=0);
 		
 	}
 	
-	public static void showChapters(){
+	public static void showChapters(ArrayList<Chapter> cahpterOfShowSelected){
 		
 		int exit = 1;
 		do{
 			System.out.println();
 			System.out.println("...::CHAPTERS::...");
 			System.out.println();
+			
+			for (int i = 0; i < cahpterOfShowSelected.size(); i++) {
+				System.out.println(i+1 + ". "+ cahpterOfShowSelected.get(i).getTitle() + ". Viewed: " + cahpterOfShowSelected.get(i).isViewed());
+			}
+			
+			System.out.println("0. Back to main Menu");
+			System.out.println();
+			
+			//Read user response
+			
+			Scanner sc = new Scanner(System.in);			
+			int response = Integer.valueOf(sc.nextLine());
+			
+			if (response == 0) {
+				showMenu();
+			}
+			
+			Chapter chapterSelected = cahpterOfShowSelected.get(response-1);
+			chapterSelected.setViewed(true);
+			Date dateI = chapterSelected.startToSee(new Date());
+			
+			for (int i = 0; i < 10000; i++) {
+				System.out.println("............");
+			}
+			
+			//Finish watching it
+			chapterSelected.stopToSee(dateI, new Date());
+			System.out.println();
+			System.out.println("You just watched: " + chapterSelected);
+			System.out.println("For: " + chapterSelected.getTimeViewed() + " time");
+			
+			
 		}while(exit!=0);
 		
 	}
@@ -152,10 +207,46 @@ int exit = 0;
 	public static void showBooks(){
 		
 		int exit = 1;
+		ArrayList<Book> books = Book.makeBooksList();
 		do{
 			System.out.println();
 			System.out.println("...::BOOKS::...");
 			System.out.println();
+			
+			for (int i = 0; i < books.size(); i++) {
+				System.out.println(i+1 + ". " + books.get(i).getTitle() + ". Viewed: " + books.get(i).isReaded());
+			}
+			
+			System.out.println("0. Back to main Menu");
+			System.out.println();
+			
+			//Read user response
+			
+			Scanner sc = new Scanner(System.in);			
+			int response = Integer.valueOf(sc.nextLine());
+			
+			if (response == 0) {
+				showMenu();
+			}	
+					
+						
+			//Finish Reading it
+			
+			Book bookSelected = books.get(response - 1);
+			bookSelected.setReaded(true);
+			Date dateI = bookSelected.startToSee(new Date());
+			
+			for (int i = 0; i < 10000; i++) {
+				System.out.println("............");
+			}
+			
+			bookSelected.stopToSee(dateI, new Date());
+			System.out.println();
+			System.out.println("You just readed: " + bookSelected);
+			System.out.println("For: " + bookSelected.getTimeReaded() + " time");
+			
+			
+			
 		}while(exit!=0);
 		
 	}
@@ -167,6 +258,19 @@ int exit = 0;
 			System.out.println();
 			System.out.println("...::MAGAZINES::...");
 			System.out.println();
+			
+			System.out.println("0. Back to main Menu");
+			System.out.println();
+			
+			//Read user response
+			
+			Scanner sc = new Scanner(System.in);			
+			int response = Integer.valueOf(sc.nextLine());
+			
+			if (response == 0) {
+				showMenu();
+			}
+			
 		}while(exit!=0);
 		
 	}
