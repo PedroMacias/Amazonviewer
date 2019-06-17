@@ -1,15 +1,16 @@
 package com.mycode.amazonviewer;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 import com.mycode.amazonviewer.model.Movie;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Movie movie = new Movie("Coco", "Animation", "Pixar", 120, (short)2017);
-		System.out.println(movie);
-		//showMenu();
+		
+		showMenu();
 	}
 
 	public static void showMenu(){
@@ -20,7 +21,7 @@ int exit = 0;
 			System.out.println("BIENVENIDOS A AMAZON VIEWER");
 			System.out.println("");
 			System.out.println("Select your option");
-			System.out.println("1, Movies");
+			System.out.println("1. Movies");
 			System.out.println("2. Show");
 			System.out.println("3. Books");
 			System.out.println("4. Magazines");
@@ -30,7 +31,8 @@ int exit = 0;
 			
 		
 			//Read user response
-			int response = 1;
+			Scanner sc = new Scanner(System.in);			
+			int response = Integer.valueOf(sc.nextLine());
 			
 			switch (response) {
 			case 0:
@@ -84,10 +86,43 @@ int exit = 0;
 	public static void showMovies(){
 		
 		int exit = 1;
+		ArrayList<Movie> movies = Movie.makeMoviesList();		
 		do{
 			System.out.println();
 			System.out.println("...::MOVIES::...");
 			System.out.println();
+			
+			for (int i = 0; i < movies.size(); i++) {
+				System.out.println(i+1 + ". " + movies.get(i).getTitle() + ". Viewed: " + movies.get(i).isViewed());
+			}
+			
+			System.out.println("0. Regresar al Menu");
+			System.out.println();
+			
+			//Read user response
+			
+			Scanner sc = new Scanner(System.in);			
+			int response = Integer.valueOf(sc.nextLine());
+			
+			if (response == 0) {
+				showMenu();
+			}
+			
+			Movie movieSelected = movies.get(response - 1);
+			movieSelected.setViewed(true);
+			Date dateI = movieSelected.startToSee(new Date());
+			
+			for (int i = 0; i < 10000; i++) {
+				System.out.println("............");
+			}
+			
+			//Finish Watching it
+			movieSelected.stopToSee(dateI, new Date());
+			System.out.println();
+			System.out.println("You just watched: " + movieSelected);
+			System.out.println("For: " + movieSelected.getTimeViewed() + " time");
+			
+			
 		}while(exit!=0);
 		
 	}
