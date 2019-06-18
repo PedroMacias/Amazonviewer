@@ -58,6 +58,11 @@ public class Film {
 		
 		return seen;
 	}
+	
+	public boolean getIsViewed(){
+		return viewed;
+	}
+	
 	public void setViewed(boolean viewed) {
 		this.viewed = viewed;
 	}

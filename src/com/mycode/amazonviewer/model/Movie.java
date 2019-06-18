@@ -7,7 +7,7 @@ public class Movie extends Film implements IVisualizable{
 
 	private int id;
 	private int timeViewed;
-			
+				
 	
 	public Movie(String title, String genre, String creator, int duration, short year) {
 		super(title, genre, creator, duration);

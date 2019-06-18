@@ -29,12 +29,22 @@ public class Book extends Publication implements IVisualizable{
 	}
 
 
-	public boolean isReaded() {
+	public String isReaded() {
+		String isReaded = "";
+			if (readed == true) {
+				isReaded = "Yes";
+			}else{
+				isReaded = "No";
+			}
+		return isReaded;
+	}
+	
+	public boolean getIsReaded() {
 		return readed;
 	}
 
-
 	public void setReaded(boolean readed) {
+		
 		this.readed = readed;
 	}
 

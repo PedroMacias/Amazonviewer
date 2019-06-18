@@ -1,5 +1,6 @@
 package com.mycode.amazonviewer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -8,6 +9,7 @@ import com.mycode.amazonviewer.model.Book;
 import com.mycode.amazonviewer.model.Chapter;
 import com.mycode.amazonviewer.model.Movie;
 import com.mycode.amazonviewer.model.Show;
+import com.mycode.makereport.Report;
 
 public class Main {
 
@@ -86,11 +88,12 @@ int exit = 0;
 		}while(exit!=0);
 		
 	}
-
+	
+	static ArrayList<Movie> movies = Movie.makeMoviesList();	
 	public static void showMovies(){
 		
 		int exit = 1;
-		ArrayList<Movie> movies = Movie.makeMoviesList();		
+				
 		do{
 			System.out.println();
 			System.out.println("...::MOVIES::...");
@@ -111,30 +114,32 @@ int exit = 0;
 			if (response == 0) {
 				showMenu();
 			}
-			
-			Movie movieSelected = movies.get(response - 1);
-			movieSelected.setViewed(true);
-			Date dateI = movieSelected.startToSee(new Date());
-			
-			for (int i = 0; i < 10000; i++) {
-				System.out.println("............");
+			if (response > 0) {
+				Movie movieSelected = movies.get(response - 1);
+				movieSelected.setViewed(true);
+				Date dateI = movieSelected.startToSee(new Date());
+				
+				for (int i = 0; i < 10000; i++) {
+					System.out.println("............");
+				}
+				
+				//Finish Watching it
+				movieSelected.stopToSee(dateI, new Date());
+				System.out.println();
+				System.out.println("You just watched: " + movieSelected);
+				System.out.println("For: " + movieSelected.getTimeViewed() + " time");
 			}
 			
-			//Finish Watching it
-			movieSelected.stopToSee(dateI, new Date());
-			System.out.println();
-			System.out.println("You just watched: " + movieSelected);
-			System.out.println("For: " + movieSelected.getTimeViewed() + " time");
 			
 			
 		}while(exit!=0);
 		
 	}
 	
+	static ArrayList<Show> shows = Show.makeShowList();
 	public static void showShow(){
 		
-		int exit = 1;
-		ArrayList<Show> shows = Show.makeShowList();
+		int exit = 1;		
 		do{
 			System.out.println();
 			System.out.println("...::SHOW::...");
@@ -204,10 +209,11 @@ int exit = 0;
 		
 	}
 	
+	static ArrayList<Book> books = Book.makeBooksList();
 	public static void showBooks(){
 		
 		int exit = 1;
-		ArrayList<Book> books = Book.makeBooksList();
+		
 		do{
 			System.out.println();
 			System.out.println("...::BOOKS::...");
@@ -277,9 +283,74 @@ int exit = 0;
 	
 	public static void makeReport(){
 		
+		Report report = new Report();
+		report.setNameFile("Report");
+		report.setExtension("txt");
+		report.setTitle("Vewed");
+		String contentReport = "";
+		
+		for (Movie movie : movies) {
+			if (movie.getIsViewed()) {
+				contentReport += movie.toString();
+			}
+		}
+		
+		for (Show show : shows) {
+			ArrayList<Chapter> chapters = show.getChapters();
+			for (Chapter chapter : chapters) {
+				contentReport += chapter.toString() + "\n";
+			}
+		}
+		
+		for (Book book : books) {
+			if (book.getIsReaded()) {
+				contentReport += book.toString() + "\n";
+			}
+		}
+		
+		report.setContent(contentReport);
+		report.makeReport();
+		
+		
 	}
 	
 	public static void makeReport(Date date){
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = df.format(date);
+		Report report = new Report();
+		
+		report.setNameFile("Report" + dateString);
+		report.setExtension("txt");
+		report.setTitle("..::VIEWED::..");
+		
+		SimpleDateFormat dfNameDays = new SimpleDateFormat("E, W MMM Y");
+		dateString = dfNameDays.format(date);
+		String contentReport = "Date: " + dateString + "\n\n\n";
+		
+		for (Movie movie : movies) {
+			if (movie.getIsViewed()) {
+				contentReport += movie.toString();
+			}
+		}
+		
+		for (Show show : shows) {
+			ArrayList<Chapter> chapters = show.getChapters();
+			for (Chapter chapter : chapters) {
+				if (chapter.getIsViewed()) {
+					contentReport += chapter.toString();
+				}
+			}
+		}
+		
+		for (Book book : books) {
+			if (book.getIsReaded()) {
+				contentReport += book.toString()+ "\n";
+			}
+		}
+		
+		report.setContent(contentReport);
+		report.makeReport();
+		
 		
 	}
 	
